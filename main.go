@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"regexp"
 )
 
 func formHandler(w http.ResponseWriter, r *http.Request) {
@@ -14,6 +15,13 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "POST request successful\n")
 	name := r.FormValue("name")
 	address := r.FormValue("address")
+	number := r.FormValue("number")
+	isNumber := regexp.MustCompile(`\d`).MatchString(number)
+
+	if isNumber {
+		fmt.Fprintf(w, "Phone Number: %s\n", number)
+	}
+
 	fmt.Fprintf(w, "Name: %s\n", name)
 	fmt.Fprintf(w, "Address: %s\n", address)
 
